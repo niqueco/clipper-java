@@ -562,18 +562,22 @@ public class DefaultClipper extends ClipperBase {
         activeEdges = null;
         sortedEdges = null;
         intersectList = new ArrayList<IntersectNode>();
-        intersectNodeComparer = ( node1, node2 ) -> {
-            final long i = node2.getPt().getY() - node1.getPt().getY();
-            if (i > 0) {
-                return 1;
-            }
-            else if (i < 0) {
-                return -1;
-            }
-            else {
-                return 0;
-            }
-        };
+        intersectNodeComparer = new Comparator<DefaultClipper.IntersectNode>() {
+		@Override
+		public int compare(IntersectNode node1, IntersectNode node2)
+		{
+		            final long i = node2.getPt().getY() - node1.getPt().getY();
+		            if (i > 0) {
+		                return 1;
+		            }
+		            else if (i < 0) {
+		                return -1;
+		            }
+		            else {
+		                return 0;
+		            }
+		}
+	};
 
         usingPolyTree = false;
         polyOuts = new ArrayList<OutRec>();
